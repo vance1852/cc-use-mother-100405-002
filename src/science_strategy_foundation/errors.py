@@ -1,11 +1,17 @@
 """领域服务使用的业务异常。"""
 
+from typing import Any
+
 
 class DomainError(Exception):
     """所有可预期业务异常的基类。"""
 
     code = "domain_error"
     status = 400
+
+    def __init__(self, message: str = "", detail: Any = None) -> None:
+        super().__init__(message)
+        self.detail = detail
 
 
 class ValidationError(DomainError):
@@ -26,6 +32,13 @@ class PermissionDenied(DomainError):
 
     code = "permission_denied"
     status = 403
+
+
+class QuarantineError(DomainError):
+    """事件被隔离区拦截的对外表述。"""
+
+    code = "quarantined"
+    status = 422
 
 
 class ConflictError(DomainError):

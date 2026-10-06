@@ -23,6 +23,12 @@ def digest(value: Any) -> str:
     return hashlib.sha256(canonical_json(value).encode("utf-8")).hexdigest()
 
 
+def digest_bytes(value: bytes) -> str:
+    """计算原始字节制品的 SHA-256，内容寻址使用。"""
+
+    return hashlib.sha256(value).hexdigest()
+
+
 def append_event(connection, *, actor_id: str, action: str, resource_type: str,
                  resource_id: str, detail: dict[str, Any], occurred_at: str) -> dict[str, Any]:
     """追加一个审计事件并返回可序列化结果。"""
